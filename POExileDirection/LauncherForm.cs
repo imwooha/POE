@@ -18,6 +18,7 @@ using System.Net;
 using System.Data.SqlClient;
 using System.Net.NetworkInformation;
 using System.Globalization;
+using POExileDirection.API;
 
 namespace POExileDirection
 {
@@ -52,11 +53,6 @@ namespace POExileDirection
             public string Postal { get; set; }
         }
         #endregion
-
-        public static string _strIPAddress { get; set; }
-        public static string _strMacAddress { get; set; }
-        public static DateTime _dtLogin { get; set; }
-        public static SqlConnection _sqlcon { get; set; }
 
         public static Rectangle[,] g_arrayRect1x1 = new Rectangle[12, 12];
 
@@ -183,6 +179,9 @@ namespace POExileDirection
         public static string g_NinjaUpdatedTime { get; set; }
         public static string g_CurrentLeague { get; set; }
 
+        public static LEAGUE g_League { get; set; }
+        public static List<LeagueName> leagueName { get; set; } = new List<LeagueName>();
+
         public static NinJaAPIData ninjaData { get; set; }// = new NinJaAPIData();
         private string g_NinjaDirectory = null;
 
@@ -197,7 +196,6 @@ namespace POExileDirection
         // DeadlyInformation for Atlas MAP ( Data From ggpk : aNitMotD )
         public class DeadlyInformation
         {
-            public DeadlyAtlas.RootObject InformationDeadly { get; set; } = new DeadlyAtlas.RootObject();
             public DeadlyAtlas.RootObjectMap InformationMaps { get; set; } = new DeadlyAtlas.RootObjectMap();
             public DeadlyAtlas.RootObjectCurruncy InformationCurrency { get; set; } = new DeadlyAtlas.RootObjectCurruncy();
             public DeadlyAtlas.RootObjectDivinationCard InformationDivinationCard { get; set; } = new DeadlyAtlas.RootObjectDivinationCard();
@@ -521,7 +519,6 @@ namespace POExileDirection
 
             string strThisAssemblyVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString();
             this.labelCurrentVer.Text = strThisAssemblyVersion;
-            this.labelServerVer.Text = strThisAssemblyVersion;
             this.labelVersionState.Text = "Current Version is the Newest.";
             this.labelNeedToUpdate.Text = "No Update Needed.";
 
@@ -536,59 +533,15 @@ namespace POExileDirection
                 DeadlyLog4Net._log.Info("FONT not found");
                 MSGForm frmMSG = new MSGForm();
                 frmMSG.lbMsg.Text = "If UI showing wrong font\r\nplease install Gulim font that located in sub folder 'FONT'\r\ngulim.ttc\r\n\r\nIt use gulim and arial font.";
-                DialogResult dr = frmMSG.ShowDialog();
-                /*MessageBox.Show("NOT FOUND");
-                var info = new ProcessStartInfo()
-                {
-                    FileName = Application.StartupPath + "\\FONT\\FontReg.exe",
-                    Arguments = "/copy",
-                    UseShellExecute = false,
-                    WindowStyle = ProcessWindowStyle.Hidden
-
-                };
-
-                Process.Start(info);*/
+                DialogResult dr = frmMSG.ShowDialog();                
             }
             else
             {
-                /*try
-                {
-                    var info = new ProcessStartInfo()
-                    {
-                        FileName = Application.StartupPath + "\\FONT\\FontReg.exe",
-                        Arguments = "/copy",
-                        UseShellExecute = false,
-                        Verb = "runas",
-                        WindowStyle = ProcessWindowStyle.Hidden
-                    };
-                    Process.Start(info);
-                    DeadlyLog4Net._log.Info("HI " + info.FileName);
-                }
-                catch (Exception ex)
-                {
-                    DeadlyLog4Net._log.Error($"catch {MethodBase.GetCurrentMethod().Name}", ex);
-                }*/
-
                 DeadlyLog4Net._log.Info("FONT Exist");
             }
-            //this.Close();
-            //Application.Exit();
 
-            // DB Connection
-            /*
-            Provider=SQLOLEDB.1;Password=dydtjs06617!;Persist Security Info=True;User ID=deadlycruh;
-            Initial Catalog=deadlycruh_godohosting_com;Data Source=211.233.51.65
-            */
-            string strConnString = "data source=211.233.51.65;initial catalog=deadlycruh_godohosting_com;persist security info=True" +
-            ";user id=deadlycruh;Password=dydtjs06617!;workstation id=HOUSEPCTECHNICA;packet size=4096";
-            _sqlcon = new SqlConnection(strConnString);
-
-
-            this.TopMost = true;
+            //this.TopMost = true;
             this.BringToFront();
-
-            _strIPAddress = getInternalIP();
-            _strMacAddress = NICMacAddress();
 
             GetPOE_IngameUserOption();
 
@@ -621,36 +574,10 @@ namespace POExileDirection
 
         private void btnLauncherLogin_Click(object sender, EventArgs e)
         {
-            bool bIsValid = false;
-            bIsValid = true;
-
-            // DeadlyLog4Net._log.Info(_strIPAddress + _strMacAddress);
             string strisLogin = String.Empty;
             try
             {
                 dtLoggedIn = DateTime.Now;
-                _strIPAddress = getInternalIP();
-                _strMacAddress = NICMacAddress();
-                // strisLogin = DeadlyDBHelper.IsLoggedInCurrent(_sqlcon, _strIPAddress, _strMacAddress);
-
-                /*if (strisLogin == "X")
-                {
-                    DeadlyDBHelper.InsertLoginCurrent(_sqlcon, "Y", _strIPAddress, _strMacAddress, ".", ".", dtLoggedIn);
-                }
-                else if(strisLogin == "N")
-                {
-                    DeadlyDBHelper.UpdateLoginCurrent(_sqlcon, "Y", _strIPAddress, _strMacAddress, dtLoggedIn);
-                }*/
-
-                //if (checkBoxAutoLogin.Checked)
-                //    SaveLoginInformEncrypt();
-
-                // Insert Action Log.
-                //DeadlyDBHelper.InsertLoginStatus(_sqlcon, "Y", _strIPAddress, _strMacAddress, ".", "LOGIN", GetCountryByIPINFO(_strIPAddress), dtLoggedIn, 0);
-                //DeadlyLog4Net._log.Info("LOGIN Welcome : " + _strIPAddress + _strMacAddress);
-
-                // Now Check Update available.
-                // AutoUpdater check server's xml.
                 AutoUpdateCheck();
             }
             catch (Exception ex)
@@ -698,71 +625,7 @@ namespace POExileDirection
 
         private void btnForceLogin_Click(object sender, EventArgs e)
         {
-            /*_strIPAddress = getInternalIP();
-            _strMacAddress = NICMacAddress();
-
-            DeadlyLog4Net._log.Info("Force Login : " + _strIPAddress + _strMacAddress);
-            // Insert Action Log.
-            dtLoggedIn = DateTime.Now;
-            DeadlyDBHelper.InsertLoginStatus(_sqlcon, "Y", _strIPAddress, _strMacAddress, ".", "LOGIN", GetCountryByIPINFO(_strIPAddress), dtLoggedIn, 0);
-            DeadlyLog4Net._log.Info("LOGIN Welcome : " + _strIPAddress + _strMacAddress);*/
-
-            // Now Check Update available.
-            // AutoUpdater check server's xml.
             AutoUpdateCheck();
-        }
-
-        private string getInternalIP()
-        {
-            string strIpAddress = String.Empty;
-            try
-            {
-                string hostName = Dns.GetHostName(); // Retrive the Name of HOST
-                IPHostEntry hostEntry = Dns.GetHostEntry(hostName);
-                IPAddress[] addr = hostEntry.AddressList;
-                var ip = addr.Where(x => x.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
-                             .FirstOrDefault();
-                return ip.ToString() ?? "";
-
-                /*IPHostEntry ip2;
-                if (ip.ToString().Contains("192.168.") || ip.ToString() == "" || ip == null)
-                {
-                    string host = Dns.GetHostName();
-                    ip2 = Dns.GetHostEntry(host);
-                    strIpAddress = ip2.AddressList[0].ToString();
-                }
-                else
-                    strIpAddress = ip.ToString();
-
-                return strIpAddress;*/
-            }
-            catch (Exception ex)
-            {
-                DeadlyLog4Net._log.Error($"catch {MethodBase.GetCurrentMethod().Name}", ex);
-                return "";
-            }
-            //localIP = (new Regex(@"\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}")).Matches(localIP)[0].ToString();
-
-            // return localIP;
-        }
-
-        private string NICMacAddress()
-        {
-            try
-            {
-                String firstMacAddress = NetworkInterface
-              .GetAllNetworkInterfaces()
-              .Where(nic => nic.OperationalStatus == OperationalStatus.Up && nic.NetworkInterfaceType != NetworkInterfaceType.Loopback)
-              .Select(nic => nic.GetPhysicalAddress().ToString())
-              .FirstOrDefault();
-
-                return firstMacAddress;
-            }
-            catch (Exception ex)
-            {
-                DeadlyLog4Net._log.Error($"catch {MethodBase.GetCurrentMethod().Name}", ex);
-                return "";
-            }
         }
 
         private bool Check_FontInstalled(string fontName)
@@ -798,18 +661,18 @@ namespace POExileDirection
             this.panelWaiting.Top = 0;
             this.panelWaiting.Width = 556;
             this.panelWaiting.Height = 416;
-            this.panelWaiting.Visible = true;
 
             try
             {
-                AutoUpdater.ShowSkipButton = false;
-                AutoUpdater.ShowRemindLaterButton = false;
-                AutoUpdater.Mandatory = true;
-                AutoUpdater.RunUpdateAsAdmin = true;
-                AutoUpdater.OpenDownloadPage = false;
-                AutoUpdater.DownloadPath = Application.StartupPath;
-                AutoUpdater.Start("https://www.jumpleasure.me/deadlytrade/repository/DeadlyTradeVersion.xml");
-                AutoUpdater.CheckForUpdateEvent += AutoUpdater_CheckForUpdateEvent;
+                //AutoUpdater.ShowSkipButton = false;
+                //AutoUpdater.ShowRemindLaterButton = false;
+                //AutoUpdater.Mandatory = true;
+                //AutoUpdater.RunUpdateAsAdmin = true;
+                //AutoUpdater.OpenDownloadPage = false;
+                //AutoUpdater.DownloadPath = Application.StartupPath;
+                //AutoUpdater.Start("https://www.jumpleasure.me/deadlytrade/repository/DeadlyTradeVersion.xml");
+                //AutoUpdater.CheckForUpdateEvent += AutoUpdater_CheckForUpdateEvent;
+                AutoUpdater_CheckForUpdateEvent();
             }
             catch (Exception ex)
             {
@@ -889,150 +752,26 @@ namespace POExileDirection
             }
         }
 
-        private void AutoUpdater_CheckForUpdateEvent(UpdateInfoEventArgs args)
+        private void AutoUpdater_CheckForUpdateEvent()
         {
             this.btnClose.Enabled = false;
-            if (args != null)
-            {
-                if (args.IsUpdateAvailable)
-                {
-                    // args.CurrentVersion means Server's Current Version.
-                    this.labelServerVer.Text = args.CurrentVersion.ToString();
-                    this.labelVersionState.Text = "Current Vrsion is not up to date.";
-                    this.labelNeedToUpdate.Text = "Update Nedeed.";
+            g_bCanLaunchAddon = false;
 
-                    // Uncomment the following line if you want to show standard update dialog instead.
-                    // AutoUpdater.ShowUpdateForm();
+            // args.CurrentVersion means Server's Current Version.
+            this.labelCurrentVer.Text = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            this.labelVersionState.Text = "Current Version is the Newest.";
+            this.labelNeedToUpdate.Text = "No Update Needed.";
 
-                    try
-                    {
-                        this.TopMost = false;
-                        panelWaiting.Visible = false;
-                        #region [[[[[ Delete Useless Files ]]]]]
-                        DirectoryInfo di = new DirectoryInfo(Application.StartupPath);
-                        FileInfo[] files = di.GetFiles("*.zip").Where(p => p.Extension == ".zip").ToArray();
-                        foreach (FileInfo file in files)
-                        {
-                            try
-                            {
-                                file.Attributes = FileAttributes.Normal;
-                                File.Delete(file.FullName);
-                            }
-                            catch(Exception ex)
-                            {
-                                DeadlyLog4Net._log.Error($"catch {MethodBase.GetCurrentMethod().Name}", ex);
-                            }
-                        }
-                        // Specific File : File.Delete(Application.StartupPath + "\\");
-                        #endregion
+            this.panelWaiting.Visible = false;
+            g_NinjaUpdatedTime = DateTime.Now.ToString("yyyy.MM.dd HH:mm:ss");
+            labelAddonStatus.Text = String.Format("Addon Data ({0})", DateTime.Now.ToString("yyyy.MM.dd HH:mm:ss"));
 
-                        if (AutoUpdater.DownloadUpdate(args))
-                        {
-                            this.TopMost = true;
-                            #region [[[[[ Show Update Contents. ]]]]]
-                            try
-                            {
-                                string strRead = String.Empty;
-                                // Read Update Contents.
-                                try
-                                {
-                                    WebClient wc = new WebClientWithTimeout();
-                                    if (LauncherForm.g_strUILang == "KOR")
-                                    {
-                                        var readData = wc.DownloadData("https://www.jumpleasure.me/deadlytrade/repository/UpdateContents.txt");
-                                        strRead = Encoding.UTF8.GetString(readData);
-                                    }
+            // STEP #3 Done.
+            xuiFlatProgressBar2.Value = 3;
+            labelAddonStatus.Text = String.Format("Addon Data ({0})", DateTime.Now.ToString("yyyy.MM.dd HH:mm:ss"));
 
-                                    else
-                                    {
-                                        var readData = wc.DownloadData("https://www.jumpleasure.me/deadlytrade/repository/UpdateContentsEN.txt");
-                                        strRead = Encoding.UTF8.GetString(readData);
-                                    }
-                                }
-                                catch (WebException ex)
-                                {
-                                    DeadlyLog4Net._log.Error($"Read Contents. {MethodBase.GetCurrentMethod().Name}", ex);
-                                }
-                                this.TopMost = true;
-                                labelUpdateTitle.Text = "DeadlyTrade " + strRead.Substring(0, 7) + " Updated contents.";
-                                labelPatchNote.Text = strRead;
-                                panelUpdateContents.Left = 0;
-                                panelUpdateContents.Top = 1;
-                                panelUpdateContents.Width = 558;
-                                panelUpdateContents.Height = 544;
-                                panelUpdateContents.Visible = true;
-                                btnExitAndUpdate.Visible = true;
-                                btnExitAndUpdate.BringToFront();
-                                pictureBox2.Dispose();
-                                panelWaiting.Dispose();
-                            }
-                            catch (Exception ex)
-                            {
-                                DeadlyLog4Net._log.Error($"Update Msg. {MethodBase.GetCurrentMethod().Name}", ex);
-                            }
-                            this.TopMost = true;
-                            Thread.Sleep(1000);
-                            #endregion
-                        }
-                    }
-                    catch(Exception exception)
-                    {
-                        /*MessageBox.Show(exception.Message, exception.GetType().ToString(), MessageBoxButtons.OK,
-                            MessageBoxIcon.Error);*/
-                        MSGForm frmMSG = new MSGForm();
-                        frmMSG.lbMsg.Text = "An error occrred while checking update, please try again later" +
-                            "\r\n\r\nERROR MESSAGE : " + exception.Message;
-                        DialogResult dr = frmMSG.ShowDialog();
+            Get_NinjaData();
 
-                        DeadlyLog4Net._log.Error($"Update {MethodBase.GetCurrentMethod().Name}", exception);
-
-                        // Force Terminate Launcher.
-                        if (dr == DialogResult.OK)
-                            Application.Exit();
-                        else
-                            Application.Exit();
-                    }
-                }
-                else
-                {
-                    AutoUpdater.CheckForUpdateEvent -= AutoUpdater_CheckForUpdateEvent;
-                    g_bCanLaunchAddon = false;
-
-                    // args.CurrentVersion means Server's Current Version.
-                    this.labelCurrentVer.Text = args.InstalledVersion.ToString();
-                    this.labelServerVer.Text = args.CurrentVersion.ToString();
-                    this.labelVersionState.Text = "Current Version is the Newest.";
-                    this.labelNeedToUpdate.Text = "No Update Needed.";
-
-                    Thread.Sleep(100);
-                    this.panelWaiting.Visible = false;
-                    Thread.Sleep(500);
-
-                    g_NinjaUpdatedTime = DateTime.Now.ToString("yyyy.MM.dd HH:mm:ss");
-                    labelAddonStatus.Text = String.Format("Addon Data ({0})", DateTime.Now.ToString("yyyy.MM.dd HH:mm:ss"));
-
-                    // STEP #3 Done.
-                    xuiFlatProgressBar2.Value = 3;
-                    labelAddonStatus.Text = String.Format("Addon Data ({0})", DateTime.Now.ToString("yyyy.MM.dd HH:mm:ss"));
-
-                    Get_NinjaData();
-                }
-            }
-            else
-            {
-                /*MessageBox.Show(
-                        @"There is a problem reaching update server please check your internet connection and try again later.",
-                        @"Update check failed", MessageBoxButtons.OK, MessageBoxIcon.Error);*/
-                MSGForm frmMSG = new MSGForm();
-                frmMSG.lbMsg.Text = "There is a problem reaching update server.\r\nPlease check your internet connection and try again later";
-                DialogResult dr = frmMSG.ShowDialog();
-
-                // Force Terminate Launcher.
-                if (dr == DialogResult.OK)
-                    Application.Exit();
-                else
-                    Application.Exit();
-            }
             this.btnClose.Enabled = true;
         }
         #endregion
@@ -1060,8 +799,6 @@ namespace POExileDirection
 
         private void Get_NinjaData()
         {
-            Thread.Sleep(300);
-
             #region ⨌⨌ Parsing ADDON ConfigPath.ini ⨌⨌
             string strINIPath = String.Format("{0}\\{1}", Application.StartupPath, "ConfigPath.ini");
             IniParser parser = new IniParser(strINIPath);
@@ -1092,27 +829,8 @@ namespace POExileDirection
                         break;
                 }
 
-                //LEAGUE_STRING enumUerChoice = LEAGUE_STRING.LEAGUE_CURRENT;
-                //switch (nUserChoice)
-                //{
-                //    case 0:
-                //        enumUerChoice = LEAGUE_STRING.LEAGUE_CURRENT;
-                //        break;
-                //    case 1:
-                //        enumUerChoice = LEAGUE_STRING.LEAGUE_STANDARD;
-                //        break;
-                //    case 2:
-                //        enumUerChoice = LEAGUE_STRING.LEAGUE_HDCORE_CURRENT;
-                //        break;
-                //    case 3:
-                //        enumUerChoice = LEAGUE_STRING.LEAGUE_HDCORE_STANDARD;
-                //        break;
-                //    default:
-                //        enumUerChoice = LEAGUE_STRING.LEAGUE_CURRENT;
-                //        break;
-                //}
 
-                g_CurrentLeague = enumUerChoice.ToDescriptionString();
+                g_CurrentLeague = LEAGUE.GetLeagueString(enumUerChoice);
 
                 labelUserLeague.Text = String.Format("Last Your currency checked league is '{0}'.", g_CurrentLeague);
 
@@ -1386,18 +1104,8 @@ namespace POExileDirection
 
             g_strDonator = String.Empty;
             // Read Supports.
-            try
-            {
-                WebClient wc = new WebClientWithTimeout();
-                var readData = wc.DownloadData("https://www.jumpleasure.me/deadlytrade/repository/Supporters.txt");
-                g_strDonator = Encoding.UTF8.GetString(readData);
-            }
-            catch (WebException ex)
-            {
-                DeadlyLog4Net._log.Error($"Read Contents. {MethodBase.GetCurrentMethod().Name}", ex);
-            }
             labelSupportersRealTime.Text = g_strDonator;
-            timerScrolling.Start();
+            //timerScrolling.Start();
 
             launcherTimer.Start();
 //#if !DEBUG
@@ -1422,7 +1130,8 @@ namespace POExileDirection
                     launcherTimer.Stop();
                     launcherTimer.Dispose();
                     Thread.Sleep(100);
-                    if(frmNinja!=null) frmNinja.Dispose();
+                    frmNinja.SetcbLeagueData(LEAGUE.GetLeagueStringList());
+                    if (frmNinja!=null) frmNinja.Dispose();
 
                     //Get_DeadlyOverlayData(); // STEP #4~14 Done.
 
@@ -1753,15 +1462,6 @@ namespace POExileDirection
             #region ⨌⨌ Get Deadly JSON Data ⨌⨌
             try
             {
-                using (var r = new StreamReader(Application.StartupPath + "\\AtlasDrop\\ZoneInform.json"))
-                {
-                    var json = r.ReadToEnd();
-                    tmpData.InformationDeadly = JsonConvert.DeserializeObject<DeadlyAtlas.RootObject>(json, settings);
-
-                    xuiFlatProgressBar2.Value = 5;
-                    labelAddonStatus.Text = String.Format("Addon Data ({0})", DateTime.Now.ToString("yyyy.MM.dd HH:mm:ss"));
-                }
-
                 using (var r = new StreamReader(Application.StartupPath + "\\AtlasDrop\\Maps.json"))
                 {
                     var json = r.ReadToEnd();
@@ -1911,7 +1611,6 @@ namespace POExileDirection
             try
             {
                 if (deadlyInformationData.InformationCurrency.Currency.Count <= 0 ||
-                  deadlyInformationData.InformationDeadly.AtlasData.Count <= 0 ||
                   deadlyInformationData.InformationDelve.Delve.Count <= 0 ||
                   deadlyInformationData.InformationDivinationCard.DivinationCards.Count <= 0 ||
                   deadlyInformationData.InformationMapFragment.MapFragments.Count <= 0 ||

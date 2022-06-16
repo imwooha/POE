@@ -23,12 +23,79 @@ namespace POExileDirection
         [Description("Hardcore")]
         LEAGUE_HDCORE_STANDARD,
 
-        [Description("Harvest")]
+        [Description("challenge")]
         LEAGUE_CURRENT,
 
-        [Description("Hardcore Harvest")]
+        [Description("challengehc")]
         LEAGUE_HDCORE_CURRENT,
     };
+
+    public class LEAGUE
+    {
+        public static string LEAGUE_STANDARD = "Standard";
+        public static string LEAGUE_HDCORE_STANDARD = "Hardcore";
+        public static string LEAGUE_CURRENT { get; set; }
+        public static string LEAGUE_HDCORE_CURRENT { get; set; }
+
+        static string LEAGUE_SEL_STRING = "Standard";
+
+        public static string GetLeagueString()
+        {
+            return LEAGUE_SEL_STRING;
+        }
+
+        public static List<string> GetLeagueStringList()
+        {
+            List<string> names = new List<string>();
+            names.Add(LEAGUE_STANDARD);
+            names.Add(LEAGUE_HDCORE_STANDARD);
+            names.Add(LEAGUE_CURRENT);
+            names.Add(LEAGUE_HDCORE_CURRENT);
+            return names;
+        }
+
+        public static string GetLeagueString(LEAGUE_STRING val)
+        {
+            switch (val)
+            {
+                case LEAGUE_STRING.LEAGUE_STANDARD:
+                    return LEAGUE_STANDARD;
+                case LEAGUE_STRING.LEAGUE_HDCORE_STANDARD:
+                    return LEAGUE_HDCORE_STANDARD;
+                case LEAGUE_STRING.LEAGUE_CURRENT:
+                    return LEAGUE_CURRENT;
+                case LEAGUE_STRING.LEAGUE_HDCORE_CURRENT:
+                    return LEAGUE_HDCORE_CURRENT;
+            }
+            return LEAGUE_SEL_STRING;
+        }
+
+        public static string SetLeague(LEAGUE_STRING val)
+        {
+            switch(val)
+            {
+                case LEAGUE_STRING.LEAGUE_STANDARD:
+                    LEAGUE_SEL_STRING = LEAGUE_STANDARD;
+                    break;
+                case LEAGUE_STRING.LEAGUE_HDCORE_STANDARD:
+                    LEAGUE_SEL_STRING = LEAGUE_HDCORE_STANDARD;
+                    break;
+                case LEAGUE_STRING.LEAGUE_CURRENT:
+                    LEAGUE_SEL_STRING = LEAGUE_CURRENT;
+                    break;
+                case LEAGUE_STRING.LEAGUE_HDCORE_CURRENT:
+                    LEAGUE_SEL_STRING = LEAGUE_HDCORE_CURRENT;
+                    break;
+            }
+         return   GetLeagueString();
+        }
+
+        public static void  SetLeagueName(string name)
+        {
+            LEAGUE_CURRENT = name;
+            LEAGUE_HDCORE_CURRENT = "Hardcore " + name;
+        }
+    }
 
     public static class LEAGUE_STRINGExtensions
     {
@@ -517,12 +584,7 @@ namespace POExileDirection
             public string kr { get; set; }
             public List<string> drop { get; set; }
         }
-
-        public class RootObject
-        {
-            public List<AtlasDataCollections> AtlasData { get; set; }
-        }
-
+        
         public class MapCollection
         {
             public string Id { get; set; }

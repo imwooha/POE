@@ -137,9 +137,6 @@ namespace POExileDirection
         ImageOverlayFormMap frmIMGOverlayMAP = null;
         public static bool bIMGOvelayActivatedMAP { get; set; }
 
-        AwakenedRegionForm frmSearchRegion = null;
-        public static bool bISearchRegionOn { get; set; }
-
         BlightOilForm frmOils = null;
         public static bool bOilsFormON { get; set; }
 
@@ -1250,10 +1247,7 @@ namespace POExileDirection
 
                     if (bOilsFormON)
                         frmOils.Show();
-
-                    if (bISearchRegionOn)
-                        frmSearchRegion.Show();
-
+                    
                     if (g_bIsNofiticationContainerOn)
                         frmNotificationContainer.Show();
 
@@ -1299,9 +1293,6 @@ namespace POExileDirection
 
                     if (bOilsFormON)
                         frmOils.Hide();
-
-                    if (bISearchRegionOn)
-                        frmSearchRegion.Hide();
 
                     if (g_bIsNofiticationContainerOn)
                         frmNotificationContainer.Hide();
@@ -4131,28 +4122,7 @@ namespace POExileDirection
             if (e.KeyCode == System.Windows.Forms.Keys.Enter || e.KeyCode == System.Windows.Forms.Keys.Escape)
                 return;
         }
-
-        private void btnSearchRegion_Click(object sender, EventArgs e)
-        {
-            if (!bISearchRegionOn)
-            {
-                bISearchRegionOn = true;
-
-                frmSearchRegion = new AwakenedRegionForm();
-                frmSearchRegion.m_nRight = this.Right;
-                frmSearchRegion.m_nTop = this.Top;
-                frmSearchRegion.Show();
-            }
-            else
-            {
-                bISearchRegionOn = false;
-
-                frmSearchRegion.Close();
-            }
-
-            InteropCommon.SetForegroundWindow(LauncherForm.g_handlePathOfExile);
-        }
-
+        
         private void btnAtlasOverlay_Click(object sender, EventArgs e)
         {
             if (!bIMGOvelayActivatedMAP)
@@ -4258,12 +4228,7 @@ namespace POExileDirection
         {
             DeadlyToolTip.SetToolTip(button4, "Atlas map Infomation Overlay.");
         }
-
-        private void btnSearchRegion_MouseHover(object sender, EventArgs e)
-        {
-            DeadlyToolTip.SetToolTip(btnSearchRegion, "Region Map Search Helper.");
-        }
-
+        
         private void btnCMD_MouseHover(object sender, EventArgs e)
         {
             DeadlyToolTip.SetToolTip(btnCMD, "POE Useful Command.");
@@ -4335,7 +4300,6 @@ namespace POExileDirection
                 btnScan.Visible = false;
                 button5.Visible = false;
                 button4.Visible = false;
-                btnSearchRegion.Visible = false;
                 btnCMD.Visible = false;
                 btnLabOverlay.Visible = false;
                 btnLOCK.Visible = false;
@@ -4367,7 +4331,6 @@ namespace POExileDirection
                 btnScan.Visible = true;
                 button5.Visible = true;
                 button4.Visible = true;
-                btnSearchRegion.Visible = true;
                 btnCMD.Visible = true;
                 btnLabOverlay.Visible = true;
                 btnLOCK.Visible = true;

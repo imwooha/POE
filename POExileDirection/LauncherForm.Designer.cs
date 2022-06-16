@@ -78,9 +78,6 @@
             this.labelVersionState = new System.Windows.Forms.Label();
             this.labelUI = new System.Windows.Forms.Label();
             this.labelClient = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.labelServerVer = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.labelCurrentVer = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -188,9 +185,6 @@
             this.panel2.Controls.Add(this.labelVersionState);
             this.panel2.Controls.Add(this.labelUI);
             this.panel2.Controls.Add(this.labelClient);
-            this.panel2.Controls.Add(this.label3);
-            this.panel2.Controls.Add(this.labelServerVer);
-            this.panel2.Controls.Add(this.label5);
             this.panel2.Controls.Add(this.label4);
             this.panel2.Controls.Add(this.labelCurrentVer);
             this.panel2.Controls.Add(this.label2);
@@ -674,36 +668,6 @@
             this.labelClient.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.labelClient.Visible = false;
             // 
-            // label3
-            // 
-            this.label3.ForeColor = System.Drawing.Color.Silver;
-            this.label3.Location = new System.Drawing.Point(17, 98);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(78, 20);
-            this.label3.TabIndex = 4;
-            this.label3.Text = "Latest Ver. ::";
-            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // labelServerVer
-            // 
-            this.labelServerVer.ForeColor = System.Drawing.Color.Bisque;
-            this.labelServerVer.Location = new System.Drawing.Point(95, 98);
-            this.labelServerVer.Name = "labelServerVer";
-            this.labelServerVer.Size = new System.Drawing.Size(60, 20);
-            this.labelServerVer.TabIndex = 4;
-            this.labelServerVer.Text = "0.0.0.0";
-            this.labelServerVer.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // label5
-            // 
-            this.label5.ForeColor = System.Drawing.Color.Silver;
-            this.label5.Location = new System.Drawing.Point(152, 98);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(16, 20);
-            this.label5.TabIndex = 4;
-            this.label5.Text = "::";
-            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
             // label4
             // 
             this.label4.ForeColor = System.Drawing.Color.Silver;
@@ -805,7 +769,6 @@
             this.MaximizeBox = false;
             this.Name = "LauncherForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.TopMost = true;
             this.TransparencyKey = System.Drawing.Color.DarkGray;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.LauncherForm_FormClosing);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.LauncherForm_FormClosed);
@@ -843,9 +806,6 @@
         private System.Windows.Forms.Button btnStartAddon;
         private System.Windows.Forms.Label labelNeedToUpdate;
         private System.Windows.Forms.Label labelVersionState;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label labelServerVer;
-        private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label labelCurrentVer;
         private System.Windows.Forms.Label label2;

@@ -43,6 +43,7 @@
             this.btnExpandCollapse = new System.Windows.Forms.Button();
             this.panelUtilityRectBorder = new System.Windows.Forms.Panel();
             this.panelUtility = new System.Windows.Forms.Panel();
+            this.label6 = new System.Windows.Forms.Label();
             this.labelSNDOnOff = new System.Windows.Forms.Label();
             this.xuiSwitch1 = new XanderUI.XUISwitch();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
@@ -75,7 +76,6 @@
             this.btnHideout = new System.Windows.Forms.Button();
             this.btnDeadlyTrade = new System.Windows.Forms.Button();
             this.btnHelp = new System.Windows.Forms.Button();
-            this.btnSearchRegion = new System.Windows.Forms.Button();
             this.btnScan = new System.Windows.Forms.Button();
             this.btnSearchStash = new System.Windows.Forms.Button();
             this.btnCMD = new System.Windows.Forms.Button();
@@ -101,7 +101,6 @@
             this.DeadlyToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.timerInit = new System.Windows.Forms.Timer(this.components);
             this.timerParser = new System.Windows.Forms.Timer(this.components);
-            this.label6 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.panelCOMMAND.SuspendLayout();
             this.panelDrag.SuspendLayout();
@@ -350,6 +349,18 @@
             this.panelUtility.Name = "panelUtility";
             this.panelUtility.Size = new System.Drawing.Size(222, 64);
             this.panelUtility.TabIndex = 45;
+            // 
+            // label6
+            // 
+            this.label6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(21)))), ((int)(((byte)(16)))));
+            this.label6.Font = new System.Drawing.Font("굴림", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.label6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(154)))), ((int)(((byte)(109)))), ((int)(((byte)(72)))));
+            this.label6.Location = new System.Drawing.Point(45, 43);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(150, 16);
+            this.label6.TabIndex = 49;
+            this.label6.Text = "Trady Notification History";
+            this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // labelSNDOnOff
             // 
@@ -798,7 +809,6 @@
             this.panel6.Controls.Add(this.btnHideout);
             this.panel6.Controls.Add(this.btnDeadlyTrade);
             this.panel6.Controls.Add(this.btnHelp);
-            this.panel6.Controls.Add(this.btnSearchRegion);
             this.panel6.Controls.Add(this.btnScan);
             this.panel6.Controls.Add(this.btnSearchStash);
             this.panel6.Controls.Add(this.btnCMD);
@@ -890,29 +900,6 @@
             this.btnHelp.KeyDown += new System.Windows.Forms.KeyEventHandler(this.btnHideout_Enter);
             this.btnHelp.MouseEnter += new System.EventHandler(this.btnHelp_MouseHover);
             this.btnHelp.MouseHover += new System.EventHandler(this.btnHelp_MouseHover);
-            // 
-            // btnSearchRegion
-            // 
-            this.btnSearchRegion.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(43)))));
-            this.btnSearchRegion.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.btnSearchRegion.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnSearchRegion.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.btnSearchRegion.FlatAppearance.BorderColor = System.Drawing.Color.DimGray;
-            this.btnSearchRegion.FlatAppearance.BorderSize = 0;
-            this.btnSearchRegion.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnSearchRegion.Font = new System.Drawing.Font("굴림", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.btnSearchRegion.ForeColor = System.Drawing.Color.White;
-            this.btnSearchRegion.Image = global::POExileDirection.Properties.Resources.icon_re_06;
-            this.btnSearchRegion.Location = new System.Drawing.Point(122, 0);
-            this.btnSearchRegion.Name = "btnSearchRegion";
-            this.btnSearchRegion.Size = new System.Drawing.Size(24, 24);
-            this.btnSearchRegion.TabIndex = 45;
-            this.btnSearchRegion.TabStop = false;
-            this.btnSearchRegion.UseVisualStyleBackColor = false;
-            this.btnSearchRegion.Click += new System.EventHandler(this.btnSearchRegion_Click);
-            this.btnSearchRegion.KeyDown += new System.Windows.Forms.KeyEventHandler(this.btnHideout_Enter);
-            this.btnSearchRegion.MouseEnter += new System.EventHandler(this.btnSearchRegion_MouseHover);
-            this.btnSearchRegion.MouseHover += new System.EventHandler(this.btnSearchRegion_MouseHover);
             // 
             // btnScan
             // 
@@ -1341,18 +1328,6 @@
             // 
             this.timerParser.Tick += new System.EventHandler(this.TimerParser_Tick);
             // 
-            // label6
-            // 
-            this.label6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(28)))), ((int)(((byte)(21)))), ((int)(((byte)(16)))));
-            this.label6.Font = new System.Drawing.Font("굴림", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.label6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(154)))), ((int)(((byte)(109)))), ((int)(((byte)(72)))));
-            this.label6.Location = new System.Drawing.Point(45, 43);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(150, 16);
-            this.label6.TabIndex = 49;
-            this.label6.Text = "Trady Notification History";
-            this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
             // ControlForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 11F);
@@ -1424,7 +1399,6 @@
         private System.Windows.Forms.Button btnUpdate;
         private System.Windows.Forms.Panel panel6;
         private System.Windows.Forms.Button btnHelp;
-        private System.Windows.Forms.Button btnSearchRegion;
         private System.Windows.Forms.Button btnHideout;
         private System.Windows.Forms.Button btnScan;
         private System.Windows.Forms.Button btnSearchStash;

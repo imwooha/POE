@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Reflection;
 using log4net;
+using POExileDirection.API;
 
 namespace POExileDirection
 {
@@ -162,6 +163,38 @@ namespace POExileDirection
                 }
 
                 UpdatingFromAPI = true;
+                try
+                {
+                    string sc = Api.DownloadFromUrl(LauncherForm.PoeLeagueApiList);
+                     Api.JsonAPI.SaveSettingFile(Application.StartupPath + "\\NinjaData\\" + "PoeLeagueApiList.json", JsonConvert.DeserializeObject<List<LeagueName>>(sc, settings));
+                    
+                    LauncherForm.g_NinjaFileMakeAndUpdateCNT = LauncherForm.g_NinjaFileMakeAndUpdateCNT + 1;
+                    LauncherForm.g_NinjaUpdatedTime = DateTime.Now.ToString("yyyy.MM.dd HH:mm:ss");
+                    xuiFlatProgressBar1.Value = LauncherForm.g_NinjaFileMakeAndUpdateCNT;
+                }
+                catch (Exception ex)
+                {
+                    DeadlyLog4Net._log.Error($"catch {MethodBase.GetCurrentMethod().Name}", ex);
+                    LauncherForm.g_NinjaFileMakeAndUpdateCNT = LauncherForm.g_NinjaFileMakeAndUpdateCNT + 1;
+                }
+
+                try
+                {
+                    if (JsonExists("PoeLeagueApiList.json"))
+                        using (var r = new StreamReader(Application.StartupPath + "\\NinjaData\\" + "PoeLeagueApiList.json"))
+                        {
+                            var json = r.ReadToEnd();
+                            LauncherForm.leagueName = JsonConvert.DeserializeObject<List<LeagueName>>(json, settings);
+                            LEAGUE.SetLeagueName(LauncherForm.leagueName[4].id);
+                            LauncherForm.g_NinjaFileMakeAndUpdateCNT = LauncherForm.g_NinjaFileMakeAndUpdateCNT + 1;
+                            LauncherForm.g_NinjaUpdatedTime = DateTime.Now.ToString("yyyy.MM.dd HH:mm:ss");
+                            xuiFlatProgressBar1.Value = LauncherForm.g_NinjaFileMakeAndUpdateCNT;
+                        }
+                }
+                catch
+                {
+                    LauncherForm.g_NinjaFileMakeAndUpdateCNT = LauncherForm.g_NinjaFileMakeAndUpdateCNT + 1;
+                }
                 try
                 {
                     Api.JsonAPI.SaveSettingFile(Application.StartupPath + "\\NinjaData\\" + "Currency.json", JsonConvert.DeserializeObject<Currency.RootObject>(Api.DownloadFromUrl(LauncherForm.CurrencyURL + league), settings));
@@ -2472,6 +2505,12 @@ namespace POExileDirection
                 panelGetData.Visible = false;
                 ButtonEnableTRUEFALSE(true);
             }
+        }
+
+        public void SetcbLeagueData(List<string> leagueNmae)
+        {
+            foreach (string name in leagueNmae)
+                cbLeague.Items.Add(name);
         }
 
         private void CbLeague_SelectedIndexChanged(object sender, EventArgs e)

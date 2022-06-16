@@ -158,6 +158,7 @@
     <Compile Include="API\Fragments.cs" />
     <Compile Include="API\HelmetEnchants.cs" />
     <Compile Include="API\Incubators.cs" />
+    <Compile Include="API\LeagueName.cs" />
     <Compile Include="API\Leagues.cs" />
     <Compile Include="API\Watchstones.cs" />
     <Compile Include="API\Oils.cs" />
@@ -172,12 +173,6 @@
     <Compile Include="API\UniqueMaps.cs" />
     <Compile Include="API\UniqueWeapons.cs" />
     <Compile Include="API\WhiteMaps.cs" />
-    <Compile Include="Authentication\LoginForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Authentication\LoginForm.Designer.cs">
-      <DependentUpon>LoginForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="DeadlyCommon\DeadlyEventHandler.cs" />
     <Compile Include="DeadlyCommon\DeadlyTranslation.cs" />
     <Compile Include="DeadlyCommon\SharpDXDeadlyWrapper.cs" />
@@ -231,12 +226,6 @@
     </Compile>
     <Compile Include="DeadlyPriceCheck\DeadlyPriceAPI.cs" />
     <Compile Include="DeadlyPriceCheck\DeadlyPriceCommon.cs" />
-    <Compile Include="DeadlyUtility\AwakenedRegionForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="DeadlyUtility\AwakenedRegionForm.Designer.cs">
-      <DependentUpon>AwakenedRegionForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="DeadlyUtility\BlightOilForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -371,9 +360,6 @@
     <Compile Include="SettingsOverhaul.Designer.cs">
       <DependentUpon>SettingsOverhaul.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="Authentication\LoginForm.resx">
-      <DependentUpon>LoginForm.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="DeadlyNotification\NotificationContainer.resx">
       <DependentUpon>NotificationContainer.cs</DependentUpon>
     </EmbeddedResource>
@@ -397,9 +383,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="DeadlyOverlay\LaunchedOverlayIMAGEForm.resx">
       <DependentUpon>LaunchedOverlayIMAGEForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="DeadlyUtility\AwakenedRegionForm.resx">
-      <DependentUpon>AwakenedRegionForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DeadlyUtility\BlightOilForm.resx">
       <DependentUpon>BlightOilForm.cs</DependentUpon>
